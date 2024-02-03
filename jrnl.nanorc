@@ -1,4 +1,14 @@
-syntax "Markdown" "\.(md|mkd|mkdn|markdown|mdx|mdown)$"
+## Syntax highlighting for Jrnl/Markdown files.
+
+## Original authors:  Ryan Westlund and Benno Schulenberg
+## Copied Markdown and Modified for jrnl.sh:  Bruce DuPlanty
+## License:  GPL version 3 or newer
+
+syntax "jrnl" "\.(jrnl)$"
+# @tag +tag #tag
+color brightgreen "\+{1}[a-zA-Z0-9_!:\-\.]*"
+color brightgreen "@{1}[a-zA-Z0-9_!:\-\.]*"
+color brightred "#{1}[a-zA-Z0-9_!:\-\.]*"
 
 # Tables (Github extension)
 color cyan ".*[ :]\|[ :].*"
@@ -20,7 +30,8 @@ color red "(^|[[:space:]])~~[^ ][^~]*~~"
 color brightmagenta "^(---+|===+|___+|\*\*\*+)\s*$"
 
 # headlines
-color brightwhite "^#{1,6} .*"
+# for jrnl files whhere MD Headings maty be embedded
+color brightwhite "#{1,6} .*"
 
 # lists
 color brightblue   "^[[:space:]]*[\*+-] |^[[:space:]]*[0-9]+\. "
@@ -43,9 +54,10 @@ color brightyellow "https?://[^ )>]+"
 
 # code
 color yellow   "`[^`]*`|^ {4}[^-+*].*"
+
 # code blocks
 color yellow start="^```[^$]" end="^```$"
 color yellow "^```$"
 
-## Trailing spaces
+# Trailing spaces
 color ,green "[[:space:]]+$"

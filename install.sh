@@ -7,13 +7,13 @@ if [ ! "$(command -v unzip)" ]; then
 fi
 
 _fetch_sources(){
-  wget -O /tmp/nanorc.zip https://github.com/scopatz/nanorc/archive/master.zip
+  wget -O /tmp/nanorc.zip https://github.com/galenguyer/nano-syntax-highlighting/archive/master.zip
   mkdir -p ~/.nano/
 
   cd ~/.nano/ || exit
   unzip -o "/tmp/nanorc.zip"
-  mv nanorc-master/* ./
-  rm -rf nanorc-master
+  mv nano-syntax-highlighting-master/* ./
+  rm -rf nano-syntax-highlighting-master
   rm /tmp/nanorc.zip
 }
 
