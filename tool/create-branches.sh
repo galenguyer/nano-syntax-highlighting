@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: rasa (https://github.com/rasa)
+
 set -vxe
 
 if command -v brew &>/dev/null; then
@@ -45,73 +47,73 @@ done
 mapfile -t nanos <<<"$(find . -not -type l -name '*.nanorc' | sort)"
 
 git checkout -b pre-5.0
-sed -E -i.bak -e 's/\bcolor\s+purple\b/color brightmagenta/' "${nanos[@]}"
-git commit -am "fix: pre-5.0: change 'brightred' to 'brightmagenta'"
+sed -E -i -e 's/\bcolor\s+purple\b/color brightmagenta/' "${nanos[@]}"
+git commit -am "fix: pre-5.0: change 'brightred' to 'brightmagenta'" || true
 
-sed -E -i.bak -e 's/\bcolor\s+latte\b/color brightred/' "${nanos[@]}"
-git commit -am "fix: pre-5.0: change 'latte' to 'brightred'"
+sed -E -i -e 's/\bcolor\s+latte\b/color brightred/' "${nanos[@]}"
+git commit -am "fix: pre-5.0: change 'latte' to 'brightred'" || true
 
 git checkout -b pre-4.5
-sed -E -i.bak -e 's/^(\s*tabgives\b)/# \1/' "${nanos[@]}"
-git commit -am "fix: pre-4.5: comment out 'tabgives'"
+sed -E -i -e 's/^(\s*tabgives\b)/# \1/' "${nanos[@]}"
+git commit -am "fix: pre-4.5: comment out 'tabgives'" || true
 
 git checkout -b pre-2.9.5
-sed -E -i.bak -e 's/color\s+normal\b/color white/' "${nanos[@]}"
-sed -E -i.bak -e 's/color\s+,normal\b/color ,white/' "${nanos[@]}"
-git commit -am "fix: pre-2.9.5: change 'normal' to 'white'"
+sed -E -i -e 's/color\s+normal\b/color white/' "${nanos[@]}"
+sed -E -i -e 's/color\s+,normal\b/color ,white/' "${nanos[@]}"
+git commit -am "fix: pre-2.9.5: change 'normal' to 'white'" || true
 
-sed -E -i.bak -e 's/color\s+brightnormal\b/color brightwhite/' "${nanos[@]}"
-git commit -am "fix: pre-2.9.5: change 'brightnormal' to 'brightwhite'"
+sed -E -i -e 's/color\s+brightnormal\b/color brightwhite/' "${nanos[@]}"
+git commit -am "fix: pre-2.9.5: change 'brightnormal' to 'brightwhite'" || true
 
 git checkout -b pre-2.5.3
-sed -E -i.bak -e 's/^(\s*comment\b)/# \1/' "${nanos[@]}"
-git commit -am "fix: pre-2.5.3: comment out 'comment'"
+sed -E -i -e 's/^(\s*comment\b)/# \1/' "${nanos[@]}"
+git commit -am "fix: pre-2.5.3: comment out 'comment'" || true
 
 git checkout -b pre-2.3.2
-sed -E -i.bak -e 's/^(\s*linter\b)/# \1/' "${nanos[@]}"
-git commit -am "fix: pre-2.3.2: comment out 'linter'"
+sed -E -i -e 's/^(\s*linter\b)/# \1/' "${nanos[@]}"
+git commit -am "fix: pre-2.3.2: comment out 'linter'" || true
 
 git checkout -b pre-2.2.99
-sed -E -i.bak -e 's/^(\s*magic\b)/# \1/' "${nanos[@]}"
-git commit -am "fix: pre-2.2.99: comment out 'magic'"
+sed -E -i -e 's/^(\s*magic\b)/# \1/' "${nanos[@]}"
+git commit -am "fix: pre-2.2.99: comment out 'magic'" || true
 
 git checkout -b pre-2.1.5
-sed -E -i.bak -e 's/^(\s*header\b)/# \1/' "${nanos[@]}"
-git commit -am "fix: pre-2.1.5: comment out 'header'"
+sed -E -i -e 's/^(\s*header\b)/# \1/' "${nanos[@]}"
+git commit -am "fix: pre-2.1.5: comment out 'header'" || true
 
-sed -E -i.bak -e 's/^(\s*syntax\s+)([^"\s]+)(\s.*)/\1"\2"\3/' "${nanos[@]}"
-git commit -am "fix: pre-2.1.5: add quotes around syntax names"
+sed -E -i -e 's/^(\s*syntax\s+)([^"\s]+)(\s.*)/\1"\2"\3/' "${nanos[@]}"
+git commit -am "fix: pre-2.1.5: add quotes around syntax names" || true
 
-sed -E -i.bak -e 's/^(\s*icolor\s+cyan\s+.*Add-AppPackage)/# \1/' "${nanos[@]}"
-git commit -am "fix: pre-2.1.5: comment out string causing out-of-memory"
+sed -E -i -e 's/^(\s*icolor\s+cyan\s+.*Add-AppPackage)/# \1/' "${nanos[@]}"
+git commit -am "fix: pre-2.1.5: comment out string causing out-of-memory" || true
 
 # +++ b/Rnw.nanorc
 # -color blue "([a-zA-Z0-9_\-$\.]*)\("
 # +color blue "([a-zA-Z0-9_$\.-]*)\("
-sed -E -i.bak -e 's/a-zA-Z0-9_\\-\$\\\./a-zA-Z0-9_$\\.-/' "${nanos[@]}"
+sed -E -i -e 's/a-zA-Z0-9_\\-\$\\\./a-zA-Z0-9_$\\.-/' "${nanos[@]}"
 
 # +++ b/jade.nanorc
 # +++ b/pug.nanorc
 # -icolor brightgreen "https?:\/\/(www\.)?[a-zA-Z0-9@%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" "_blank"
 # +icolor brightgreen "https?:\/\/(www\.)?[a-zA-Z0-9@%._\+~#=]+\.[a-z]+\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" "_blank"
-sed -E -i.bak -e 's/]\{2,256\}\\/]+\\/' "${nanos[@]}"
-sed -E -i.bak -e 's/]\{2,6\}\\b/]+\\b/' "${nanos[@]}"
+sed -E -i -e 's/]\{2,256\}\\/]+\\/' "${nanos[@]}"
+sed -E -i -e 's/]\{2,6\}\\b/]+\\b/' "${nanos[@]}"
 
 # +++ b/toml.nanorc
 # -color ,red "^[[:space:]]*\[\..*?\]"
 # +color ,red "^[[:space:]]*\[\..*"
-sed -E -i.bak -e 's/(color ,red .*\.\.\*)\?\\]/\1/' "${nanos[@]}"
+sed -E -i -e 's/(color ,red .*\.\.\*)\?\\]/\1/' "${nanos[@]}"
 
 # +++ b/x11basic.nanorc
 # -icolor brightwhite "\<[A-Z_][A-Za-z0-9_]*(|\$|\%|\&|\||\(\))\>"
 # +icolor brightwhite "\<[A-Z_][A-Za-z0-9_]*(\$|\%|\&|\||\(\))\>"
-sed -E -i.bak -e 's/(icolor\s+brightwhite.*\*\()\|/\1/' "${nanos[@]}"
+sed -E -i -e 's/(icolor\s+brightwhite.*\*\()\|/\1/' "${nanos[@]}"
 
 # +++ b/yaml.nanorc
 # -color red "(^|\s+).*+\s*:(\s|$)"
 # +color red "(^|\s+).*\+\s*:(\s|$)"
-sed -E -i.bak -e 's/(color\s+red\s+.*\)\.\*)\+/\1\\+/' "${nanos[@]}"
-git commit -am "fix: pre-2.1.5: fix bad regexes"
+sed -E -i -e 's/(color\s+red\s+.*\)\.\*)\+/\1\\+/' "${nanos[@]}"
+git commit -am "fix: pre-2.1.5: fix bad regexes" || true
 
 # git checkout master
 

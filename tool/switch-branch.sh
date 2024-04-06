@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-NANO_VER=$(nano --version 2>/dev/null | awk '/version/ {print $4}' | awk -F . '{printf("%d%02d%02d", $1,  $2, $3)}')
+NANO_VER=$(nano --version 2>/dev/null | awk '/version/ {print $4}' |
+        awk -F . '{printf("%d%02d%02d", $1, $2, $3)}')
 
 if [[ -z "${NANO_VER}" ]]; then
   printf "Cannot determine nano's version\\n" >&2
