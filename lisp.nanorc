@@ -1,4 +1,4 @@
-syntax "Lisp" "(emacs|zile)$" "\.(el|li?sp|scm|ss)$"
+syntax "Lisp" "(emacs|zile)$" "\.(el|li?sp|ss)$"
 
 color brightblue "\([a-z-]+"
 color red "\(([-+*/<>]|<=|>=)|'"
