@@ -1,7 +1,7 @@
 # Improved Nano Syntax Highlighting Files
 
-[![shellcheck](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/shellcheck.yml)
-[![included-all](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/include-list-check.yml/badge.svg)](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/include-list-check.yml)
+[![shellcheck](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/shellcheck.yml/badge.svg?branch=master)](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/shellcheck.yml)
+[![include-list-check](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/include-list-check.yml/badge.svg?branch=master)](https://github.com/galenguyer/nano-syntax-highlighting/actions/workflows/include-list-check.yml)
 
 This repository holds ``{lang}.nanorc`` files that have improved definitions of syntax highlighting for various languages.
 
