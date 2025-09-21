@@ -52,9 +52,9 @@ color normal    "\<normal\>"
 ## hex color
 color green     "#[0-9][0-9][0-9]"
 
-## Valid options
-## run: arr=($(man nanorc | grep "    set " | awk '{print $2}')); echo "$(IFS='|'; echo "${arr[*]}")"
-color brightgreen "^[[:space:]]*(set|unset)[[:space:]]+(afterends|allow_insecure_backup|atblanks|autoindent|backup|backupdir|boldtext|bookstyle|brackets|breaklonglines|casesensitive|constantshow|cutfromcursor|emptyline|errorcolor|fill|functioncolor|guidestripe|historylog|indicator|jumpyscrolling|keycolor|linenumbers|locking|magic|matchbrackets|minibar|minicolor|mouse|multibuffer|noconvert|nohelp|nonewlines|nowrap|numbercolor|operatingdir|positionlog|preserve|promptcolor|punct|quickblank|quotestr|rawsequences|rebinddelete|regexp|saveonexit|scrollercolor|selectedcolor|showcursor|smarthome|softwrap|speller|spotlightcolor|stateflags|statuscolor|stripecolor|tabsize|tabstospaces|titlecolor|trimblanks|unix|whitespace|wordbounds|wordchars|zap|zero)\>"
+## Valid options (updated: v8.6)
+## $ arr=($(man nanorc | grep "    set " | awk '{print $2}')); echo "$(IFS='|'; echo "${arr[*]}")"
+color brightgreen "^[[:space:]]*(set|unset)[[:space:]]+(afterends|allow_insecure_backup|atblanks|autoindent|backup|backupdir|boldtext|bookstyle|brackets|breaklonglines|casesensitive|colonparsing|constantshow|cutfromcursor|emptyline|errorcolor|fill|functioncolor|guidestripe|historylog|indicator|jumpyscrolling|keycolor|linenumbers|locking|magic|matchbrackets|minibar|minicolor|mouse|multibuffer|noconvert|nohelp|nonewlines|nowrap|numbercolor|operatingdir|positionlog|preserve|promptcolor|punct|quickblank|quotestr|rawsequences|rebinddelete|regexp|saveonexit|scrollercolor|selectedcolor|showcursor|smarthome|softwrap|speller|spotlightcolor|stateflags|statuscolor|stripecolor|tabsize|tabstospaces|titlecolor|trimblanks|unix|whitespace|wordbounds|wordchars|zap|zero)\>"
 
 ## Keywords
 color green "^[[:space:]]*(set|unset|syntax|header|magic|formatter|linter|comment|tabgives|include|extendsyntax|bind|unbind)\>"
