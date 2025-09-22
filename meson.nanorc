@@ -1,0 +1,32 @@
+## Syntax highlighting for Godot.
+
+syntax gdscript "meson.build$" "meson_options.txt$"
+magic "Meson build script"
+comment "#"
+
+# Keywords
+color brightblue "\<(add_library|add_executable|subdir|dependency|executable|shared_library|shared_module|static_library|configure_file|run_target|test|benchmark|install_headers|install_man|install_data|install_subdir|option)\>"
+color brightyellow "\<(true|false|endif|else|elif|if|foreach|endforeach|not|or|and|return|continue)\>"
+color brightmagenta "\<(include_directories|link_directories|link_with|set|find_program|configure_file|install_files|project)\>"
+color brightcyan "\<(import|declare_dependency|get_option|files|set_variable|run_command|message)\>"
+color brightgreen "\<(meson|error)\>"
+
+# Comments
+color green "#.*"
+
+# Numbers
+color brightred "\<[+-]?[0-9]+\.?[0-9]*([eE][+-]?[0-9]+)?\>"
+
+# operators
+color magenta "[.:;,+*|=!\%@]" "<" ">" "/" "-" "&"
+
+# Strings
+color yellow "['](\\.|[^'])*[']"
+# Variables
+color cyan "\<@[A-Za-z_][A-Za-z0-9_]*\>"
+
+# Section headers
+color brightgreen "^\[[A-Za-z0-9_-]+\]"
+
+# Trailing whitespace.
+color ,green "[[:space:]]+$"
