@@ -1,0 +1,95 @@
+name: release
+
+on:
+  schedule:
+    - cron: '0 0 1 */1 *' # @monthly
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        type: string
+        required: false
+      environment:
+        type: environment
+        required: true
+        default: release
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    outputs:
+      release_tag: ${{ steps.verify.outputs.release_tag }}
+      release_commit: ${{ steps.verify.outputs.release_commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          # FIXME: workaround for git 2.48, see https://github.com/actions/checkout/issues/1467
+          fetch-depth: 100
+          ref: ${{ github.ref }}
+
+      - name: Verify release tag
+        id: verify
+        env:
+          INPUT_RELEASE_TAG: ${{ inputs.release_tag }}
+          REPOSITORY_URL: '${{ github.server_url }}/${{ github.repository }}'
+        run: |
+          set -eu
+
+          latest_tag="$(git describe --tags --abbrev=0)"
+          latest_tag_fmt="[\`${latest_tag}\`](${REPOSITORY_URL}/releases/tag/${latest_tag})"
+          release_tag="${INPUT_RELEASE_TAG:-$(date +'%Y.%m.%d')}"
+          release_commit="$(git log --format="%H" -n 1)"
+
+          # note: this comparison only works with lexicographic dates
+          if [[ ! "${release_tag}" > "${latest_tag}" ]]; then
+            echo "## Skipping release \`${release_tag}\`" >> "$GITHUB_STEP_SUMMARY"
+            echo "Latest tag ${latest_tag_fmt} already covers this date." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          elif [[ "$(git log --format="%H" -n 1 "${latest_tag}")" = "${release_commit}" ]]; then
+            echo "## Skipping release \`${release_tag}\`" >> "$GITHUB_STEP_SUMMARY"
+            echo "No changes since ${latest_tag_fmt}." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          {
+            echo "## Proposing new release \`${release_tag}\`"
+            echo "Commit: [${release_commit}](${REPOSITORY_URL}/commit/${release_commit})"
+
+            echo "### Changes since ${latest_tag_fmt}"
+            echo '```log'
+            git diff --histogram --stat "${latest_tag}..${release_commit}"
+            echo '```'
+
+            echo '### Git log'
+            echo '```log'
+            git log --no-merges "${latest_tag}..${release_commit}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "release_tag=${release_tag}" >> "$GITHUB_OUTPUT"
+          echo "release_commit=${release_commit}" >> "$GITHUB_OUTPUT"
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [verify]
+    if: needs.verify.outputs.release_tag != ''
+    environment: ${{ inputs.environment || 'release' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.verify.outputs.release_commit }}
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.verify.outputs.release_tag }}
+          name: ${{ needs.verify.outputs.release_tag }}
+          target_commitish: ${{ needs.verify.outputs.release_commit }}
+          generate_release_notes: true
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
