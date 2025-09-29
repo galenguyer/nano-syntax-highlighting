@@ -1,0 +1,21 @@
+## Ninja build file syntax highlighting
+
+syntax "ninja" "\.ninja$"
+
+# Keywords
+color brightblue "\<rule\>"
+
+
+# Variables
+color cyan "\<\$\{[A-Za-z0-9_]+\}\>"
+
+# Targets
+color green "\<command|description|generator|pool|restat|deps|depfile|DEPFILE_UNQUOTED|ARGS|DESC|COMMAND|DEPFILE|LINK_ARGS|IMPLIB\>"
+color red "\<|\$in|\$out|\$[a-zA-Z_]*|=|\>"
+color blue "\<|build .*:|\>"
+
+# Comments
+color magenta "#.*$"
+
+# Section headers
+color brightgreen "^[A-Za-z0-9_]+:"
