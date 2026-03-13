@@ -1,0 +1,32 @@
+# Seed7 syntax highlighting for Nano editor.
+# https://github.com/ThomasMertes/seed7
+# https://man.archlinux.org/man/nanorc.5#FILES
+# https://github.com/barankegnu/nano-syntax-highlighting
+
+syntax "seed7" "\.s(d7|7i)"
+
+## Types
+color red "\<(array|bigInteger|bigRational|bin32|bin64|bitset|boolean|bstring|category|char|clib_file|color|complex|creator|database|destroyer|duration|enum|expr|file|fileSys|float|func|hash|integer|listener|object|parseError|pollData|proc|process|program|rational|reference|ref_list|set|sqlStatement|string|struct|structElement|text|time|type|varfunc|void|PRIMITIVE_WINDOW)\>"
+
+## Constants-Variables-Exceptions
+color green "\<(E|empty|EOF|FALSE|Infinity|NaN|NIL|PI|TRUE|CONSOLE_KEYBOARD|GRAPH_KEYBOARD|IN|KEYBOARD|OUT|STD_CONSOLE|STD_ERR|STD_IN|STD_NULL|STD_OUT|DATABASE_ERROR|FILE_ERROR|GRAPHIC_ERROR|ILLEGAL_ACTION|INDEX_ERROR|MEMORY_ERROR|NUMERIC_ERROR|OVERFLOW_ERROR|RANGE_ERROR)\>"
+
+## Keywords
+color blue "\<(attr|begin|block|case|catch|const|default|do|downto|else|elsif|end|exception|fixLen|for|forward|global|if|in|include|inout|is|key|len|local|new|of|otherwise|param|raise|range|ref|repeat|result|return|step|sub|syntax|system|then|to|until|val|var|when|while|and|conj|conv|digits|div|exp|lpad|lapd0|mdiv|mod|mult|not|or|parse|radix|RADIX|rem|rpad|sci|times|varConv)\>"
+
+## Keyword correction
+color blue "\<(is func)\>"
+color blue "\<(end func)\>"
+
+## Operator symbols
+color magenta "\+(:=)?|-(:=|>(<-)?)?|\*(:=|\*)?|/(:=)?|<([=>&]|<(:=)?|-(>)?)?|>([=<]|>(:=)?)?|:=?|\^|&(:=)?|@:="
+
+## Numeric-String-Char literals
+color yellow "\<[0-9]+(_|#[0-9a-zA-Z]+_?|[Ee](\+|-)?[0-9]+|\.[0-9]+([Ee](\+|-)?[0-9]+)?)?\>"
+color yellow "("|\\)([^"\\]|\\([abefnrtv\\'"A-Z]|[0-9]+(#[0-9a-zA-Z]+)?;)|"")*("|\\([ \t]|$))"
+color yellow "'([^\\]|\\([abefnrtv\\'"A-Z]|[0-9]+(#[0-9a-fA-F]+)?))*'"
+
+## Line-Block comment
+color cyan "(^|[ \t!"\$%&'\(\)\*\+,\-\.:;<=>\?a-zA-Z])#.*$"
+color cyan "\(\*(.|$[ \t]*^)*\*\)"
+color cyan start="\(\*" end="\*\)"
