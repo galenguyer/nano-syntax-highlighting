@@ -7,12 +7,32 @@ if [ ! "$(command -v unzip)" ]; then
   exit 1
 fi
 
+# check for a download tool; prefer wget, fall back to curl
+if command -v wget >/dev/null 2>&1; then
+  DOWNLOADER="wget"
+elif command -v curl >/dev/null 2>&1; then
+  DOWNLOADER="curl"
+else
+  echo 'Either wget or curl is required but neither was found. Install one of them and then run this script again.' >&2
+  exit 1
+fi
+
+# download URL into FILE using whichever tool is available
+_download() {
+  out="$1"
+  url="$2"
+  case "$DOWNLOADER" in
+    wget) wget -O "$out" "$url" ;;
+    curl) curl -fL -o "$out" "$url" ;;
+  esac
+}
+
 _fetch_sources() {
   br=$(_find_suitable_branch)
   mkdir -p ~/.nano/
   cd ~/.nano/
 
-  wget -O "/tmp/nanorc.zip" "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip"
+  _download "/tmp/nanorc.zip" "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip"
   unzip -o "/tmp/nanorc.zip"
   mv "nano-syntax-highlighting-${br}"/* ./
   rm -rf "nano-syntax-highlighting-${br}"
