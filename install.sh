@@ -2,7 +2,7 @@
 set -e
 
 # check for unzip before we continue
-if [ ! "$(command -v unzip)" ]; then
+if ! command -v unzip >/dev/null 2>&1; then
   echo 'unzip is required but was not found. Install unzip first and then run this script again.' >&2
   exit 1
 fi
