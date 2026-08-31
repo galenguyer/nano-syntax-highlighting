@@ -13,13 +13,13 @@ There are three ways to install this repo.
 
 ### 1. Automatic installer
 
-Copy the following code to download and run the installer script:
+Use this command in your terminal to automatically install using `curl`:
 
 ```sh
 curl https://raw.githubusercontent.com/galenguyer/nano-syntax-highlighting/master/install.sh | bash
 ```
 
-If your machine doesn't have `curl` command, use this code:
+You can also use `wget` if you do not have `curl` installed:
 
 ```sh
 wget https://raw.githubusercontent.com/galenguyer/nano-syntax-highlighting/master/install.sh -O- | bash

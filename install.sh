@@ -7,12 +7,26 @@ if [ ! "$(command -v unzip)" ]; then
   exit 1
 fi
 
+_download_file() {
+  url="$1"
+  output="$2"
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL "$url" -o "$output"
+  elif command -v wget >/dev/null 2>&1; then
+    wget -q -O "$output" "$url"
+  else
+    echo 'Neither curl nor wget was found. Install one of them to proceed.' >&2
+    exit 1
+  fi
+}
+
 _fetch_sources() {
   br=$(_find_suitable_branch)
   mkdir -p ~/.nano/
   cd ~/.nano/
 
-  wget -O "/tmp/nanorc.zip" "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip"
+  _download_file "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip" "/tmp/nanorc.zip"
   unzip -o "/tmp/nanorc.zip"
   mv "nano-syntax-highlighting-${br}"/* ./
   rm -rf "nano-syntax-highlighting-${br}"
@@ -20,7 +34,7 @@ _fetch_sources() {
 }
 
 _update_nanorc() {
-  touch $NANORC_FILE
+  touch "$NANORC_FILE"
   # add all includes from ~/.nano/nanorc if they're not already there
   while read -r inc; do
       if ! grep -q "$inc" "${NANORC_FILE}"; then
