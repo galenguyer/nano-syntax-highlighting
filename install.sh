@@ -1,18 +1,35 @@
 #!/bin/bash
 set -e
 
-# check for unzip before we continue
-if [ ! "$(command -v unzip)" ]; then
+# check for required tools before we continue
+if ! command -v unzip &>/dev/null; then
   echo 'unzip is required but was not found. Install unzip first and then run this script again.' >&2
   exit 1
 fi
+if ! command -v wget &>/dev/null && ! command -v curl &>/dev/null; then
+  echo 'Neither wget nor curl is available. Install either wget or curl and then run this script again.' >&2
+  exit 1
+fi
+
+_fetch_url() {
+  local url="$1"
+  local output="$2"
+  if command -v wget &>/dev/null; then
+    wget -O "$output" "$url"
+  elif command -v curl &>/dev/null; then
+    curl -o "$output" "$url"
+  else
+    echo 'Neither wget nor curl is available.' >&2
+    exit 1
+  fi
+}
 
 _fetch_sources() {
-  br=$(_find_suitable_branch)
+  local br=$(_find_suitable_branch)
   mkdir -p ~/.nano/
   cd ~/.nano/
 
-  wget -O "/tmp/nanorc.zip" "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip"
+  _fetch_url "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip" "/tmp/nanorc.zip"
   unzip -o "/tmp/nanorc.zip"
   mv "nano-syntax-highlighting-${br}"/* ./
   rm -rf "nano-syntax-highlighting-${br}"
@@ -20,17 +37,18 @@ _fetch_sources() {
 }
 
 _update_nanorc() {
-  touch $NANORC_FILE
+  touch "$NANORC_FILE"
   # add all includes from ~/.nano/nanorc if they're not already there
   while read -r inc; do
-      if ! grep -q "$inc" "${NANORC_FILE}"; then
+      if ! grep -qF "$inc" "${NANORC_FILE}"; then
           echo "$inc" >> "$NANORC_FILE"
       fi
   done < ~/.nano/nanorc
 }
 
 _update_nanorc_lite() {
-  sed -i '/include "\/usr\/share\/nano\/\*\.nanorc"/i include "~\/.nano\/*.nanorc"' "${NANORC_FILE}"
+  sed -i .bak '/include "\/usr\/share\/nano\/\*\.nanorc"/i include "~\/.nano\/*.nanorc"' "${NANORC_FILE}"
+  rm -f "${NANORC_FILE}.bak"
 }
 
 _version_str_to_num() {
@@ -41,6 +59,7 @@ _version_str_to_num() {
 }
 
 _find_suitable_branch() {
+  local verstr ver target br num
   # find the branch that is suitable for local nano
   verstr=$(nano --version 2>/dev/null | awk '/GNU nano/ {print ($3=="version")? $4: substr($5,2)}')
   ver=$(_version_str_to_num "$verstr")
@@ -49,7 +68,7 @@ _find_suitable_branch() {
     echo "master"
     return
   fi
-  branches=(
+  local -a branches=(
     pre-6.0
     pre-5.0
     pre-4.5
@@ -60,10 +79,10 @@ _find_suitable_branch() {
   )
   target="master"
   # find smallest branch that is larger than ver
-  for b in "${branches[@]}"; do
-    num=$(_version_str_to_num "${b#*pre-}")
+  for br in "${branches[@]}"; do
+    num=$(_version_str_to_num "${br#*pre-}")
     if (( ver < num )); then
-      target="${b}"
+      target="${br}"
     else
       break
     fi
