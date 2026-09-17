@@ -25,7 +25,8 @@ _fetch_url() {
 }
 
 _fetch_sources() {
-  local br=$(_find_suitable_branch)
+  local br
+  br=$(_find_suitable_branch)
   mkdir -p ~/.nano/
   cd ~/.nano/
 
