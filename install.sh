@@ -17,7 +17,7 @@ _fetch_url() {
   if command -v wget &>/dev/null; then
     wget -O "$output" "$url"
   elif command -v curl &>/dev/null; then
-    curl -o "$output" "$url"
+    curl --fail -L -o "$output" "$url"
   else
     echo 'Neither wget nor curl is available.' >&2
     exit 1
