@@ -7,12 +7,25 @@ if [ ! "$(command -v unzip)" ]; then
   exit 1
 fi
 
+_download() {
+  dest=$1
+  url=$2
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL -o "$dest" "$url"
+  elif command -v wget >/dev/null 2>&1; then
+    wget -O "$dest" "$url"
+  else
+    echo 'curl or wget is required but neither was found. Install one and run this script again.' >&2
+    exit 1
+  fi
+}
+
 _fetch_sources() {
   br=$(_find_suitable_branch)
   mkdir -p ~/.nano/
   cd ~/.nano/
 
-  wget -O "/tmp/nanorc.zip" "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip"
+  _download "/tmp/nanorc.zip" "https://github.com/galenguyer/nano-syntax-highlighting/archive/${br}.zip"
   unzip -o "/tmp/nanorc.zip"
   mv "nano-syntax-highlighting-${br}"/* ./
   rm -rf "nano-syntax-highlighting-${br}"
@@ -90,9 +103,11 @@ case "$1" in
  ;;
 esac
 
-_fetch_sources
-if [ "$UPDATE_LITE" ]; then
-  _update_nanorc_lite
-else
-  _update_nanorc
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+  _fetch_sources
+  if [ "$UPDATE_LITE" ]; then
+    _update_nanorc_lite
+  else
+    _update_nanorc
+  fi
 fi
