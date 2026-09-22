@@ -88,7 +88,7 @@ _find_suitable_branch() {
 NANORC_FILE=~/.nanorc
 UPDATE_LITE=
 
-case "$1" in
+case "${1:-}" in
  -l|--lite)
    UPDATE_LITE=1
  ;;
