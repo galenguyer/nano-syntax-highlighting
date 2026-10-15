@@ -108,7 +108,7 @@ This is reported in [Issue 52](https://github.com/scopatz/nanorc/issues/52).
 Good question! It's due to the way that nano reads the files, the regex instructions should be in a _specific order_ which is evident in some nanorc files.
 And if we use the `include` or `extendsyntax` commands, the colors or other things may not work as expected.
 The best way to make changes is by copying and editing the original files.
-Please see this [issue](https://savannah.gnu.org/bugs/index.php?5698).
+Please see this [issue](https://savannah.gnu.org/bugs/index.php?56984).
 But if some original nanorc file needs an update, feel free to [patch it](https://savannah.gnu.org/patch/?func=additem&group=nano)!
 
 ### My shortcut is not working!
