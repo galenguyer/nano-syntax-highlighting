@@ -34,16 +34,14 @@ The `install.sh` script may be run with `-l` or `--lite` to insert the included 
 
 ### 2. Package managers
 
-As this is a fork, it is not (yet) available in any official repositories.
-
-<!-- The follow table lists all systems with this package published.
+The follow table lists all systems with this package published.
 Feel free to add your official package manager.
 
 > Systems that are based in others' package managers or repositories are compatible. For example: `pacman` based systems are compatible with `Arch Linux`.
 
 | System     | Command                                  |
 | ---------- | ---------------------------------------- |
-| Arch Linux | `pacman -S nano-syntax-highlighting`     | -->
+| Arch Linux | `pacman -S nano-syntax-highlighting`     |
 
 ### 3. Clone repo (copy the files)
 
