@@ -18,12 +18,12 @@ color green "^=>\s*\S+"
 color yellow "^=>"
 
 # Bullet Lists
-color blue "^\s*\*.*"
-color brightblue "^\s*\*"
+color blue "^\*.*"
+color brightblue "^\*"
 
 # Quote lines
-color orange,black "^\s*>.*"
-color orange "^\s*>"
+color orange,black "^>.*"
+color orange "^>"
 
 # Monospaced Blocks
 color white,black start="^```" end="^```"
