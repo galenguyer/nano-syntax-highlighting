@@ -8,8 +8,9 @@ comment "//"
 color white "^.+$"
 
 ## HTML/JSX Tag Names & Brackets
-color orange "</?[A-Za-z][A-Za-z0-9._-]*"
+color orange "</?[A-Za-z][A-Za-z0-9._:-]*"
 color orange "/?>"
+color normal "(=>|>=)"
 
 ## HTML/JSX Props & Attributes (any propName= inside JSX)
 color magenta "[[:space:]][A-Za-z_:][A-Za-z0-9_.:-]*="
@@ -21,6 +22,9 @@ color yellow "\<[-+]?([1-9][0-9]*|0[0-7]*|0x[0-9a-fA-F]+)([uU][lL]?|[lL][uU]?)?\
 ## Floating point number with at least one digit before decimal point
 color yellow "\<[-+]?([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([EePp][+-]?[0-9]+)?[fFlL]?"
 color yellow "\<[-+]?([0-9]+[EePp][+-]?[0-9]+)[fFlL]?"
+
+## Function names (placed before Keywords so if/return/switch aren't overridden)
+color cyan "[A-Za-z_][A-Za-z0-9_]*[[:space:]]*[(]|)"
 
 ## Keywords
 color green "\<(abstract|as|asserts|async|await|break|case|catch|class|const|continue)\>"
@@ -35,9 +39,6 @@ color red "\<(any|bigint|boolean|never|number|object|string|symbol|undefined|unk
 color red "\<(Array|Boolean|Date|Enumerator|Error|Function|Math|Number|Object|Promise|RegExp|String)\>"
 color red "\<(WeakMap|Map|WeakSet|Set|Symbol|Record|Partial|Required|Readonly|Pick|Omit)\>"
 color red "\<(true|false|null|NaN)\>"
-
-## Function names
-color cyan "[A-Za-z_][A-Za-z0-9_]*[[:space:]]*[(]|)"
 
 ## Strings (placed after JSX props so string values stay yellow)
 color brightyellow "L?\"(\\"|[^"])*\""
