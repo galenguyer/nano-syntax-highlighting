@@ -32,7 +32,7 @@ color green "\<(debugger|declare|default|delete|do|else|enum|export|extends|fina
 color green "\<(for|from|function|get|goto|if|implements|import|in|infer|instanceof|interface|is)\>"
 color green "\<(keyof|let|module|namespace|new|of|override|package|private|protected|public)\>"
 color green "\<(readonly|return|satisfies|set|static|super|switch|this|throw|try|type|typeof)\>"
-color green "\<(var|void|while|with|yield)\>"
+color green "\<(accessor|using|var|void|while|with|yield)\>"
 
 ## Type specifiers
 color red "\<(any|bigint|boolean|never|number|object|string|symbol|undefined|unknown)\>"
@@ -50,7 +50,7 @@ color brightwhite,blue start="\$\{" end="\}"
 color yellow "\\[0-7][0-7]?[0-7]?|\\x[0-9a-fA-F]+|\\[bfnrt'"`\?\\]"
 
 ## Comments
-color brightblue start="/\*" end="\*/"
+color brightblue start="\{?/\*" end="\*/\}?"
 color brightblue "(^|\s)//.*$"
 
 ## Trailing spaces
