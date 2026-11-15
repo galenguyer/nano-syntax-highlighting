@@ -1,0 +1,60 @@
+### TypeScript XML files (derived from JSX and TypeScript)
+
+syntax "TSX" "\.tsx$"
+header "^#!.*\/(env +)(node|ts-node|tsx)"
+comment "//"
+
+## Default
+color white "^.+$"
+
+## HTML/JSX Tag Names & Brackets
+color orange "</?[A-Za-z][A-Za-z0-9._:-]*"
+color orange "/?>"
+color normal "(=>|>=)"
+
+## HTML/JSX Props & Attributes (any propName= inside JSX)
+color magenta "[[:space:]][A-Za-z_:][A-Za-z0-9_.:-]*="
+color magenta "[[:space:]](required|disabled|selected|checked|readOnly)[[:space:]/>]"
+
+## Decimal, octal and hexadecimal numbers
+color yellow "\<[-+]?([1-9][0-9]*|0[0-7]*|0x[0-9a-fA-F]+)([uU][lL]?|[lL][uU]?)?\>"
+
+## Floating point number with at least one digit before decimal point
+color yellow "\<[-+]?([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([EePp][+-]?[0-9]+)?[fFlL]?"
+color yellow "\<[-+]?([0-9]+[EePp][+-]?[0-9]+)[fFlL]?"
+
+## Function names (placed before Keywords so if/return/switch aren't overridden)
+color cyan "[A-Za-z_][A-Za-z0-9_]*[[:space:]]*[(]|)"
+
+## Keywords
+color green "\<(abstract|as|asserts|async|await|break|case|catch|class|const|continue)\>"
+color green "\<(debugger|declare|default|delete|do|else|enum|export|extends|final|finally)\>"
+color green "\<(for|from|function|get|goto|if|implements|import|in|infer|instanceof|interface|is)\>"
+color green "\<(keyof|let|module|namespace|new|of|override|package|private|protected|public)\>"
+color green "\<(readonly|return|satisfies|set|static|super|switch|this|throw|try|type|typeof)\>"
+color green "\<(var|void|while|with|yield)\>"
+
+## Type specifiers
+color red "\<(any|bigint|boolean|never|number|object|string|symbol|undefined|unknown)\>"
+color red "\<(Array|Boolean|Date|Enumerator|Error|Function|Math|Number|Object|Promise|RegExp|String)\>"
+color red "\<(WeakMap|Map|WeakSet|Set|Symbol|Record|Partial|Required|Readonly|Pick|Omit)\>"
+color red "\<(true|false|null|NaN)\>"
+
+## Strings (placed after JSX props so string values stay yellow)
+color brightyellow "L?\"(\\"|[^"])*\""
+color brightyellow "L?'(\\'|[^'])*'"
+color brightyellow "L?`(\\`|[^`])*`"
+color brightwhite,blue start="\$\{" end="\}"
+
+## Escapes
+color yellow "\\[0-7][0-7]?[0-7]?|\\x[0-9a-fA-F]+|\\[bfnrt'"`\?\\]"
+
+## Comments
+color brightblue start="/\*" end="\*/"
+color brightblue "(^|\s)//.*$"
+
+## Trailing spaces
+color ,green "[[:space:]]+$"
+
+## Reminders
+color brightwhite,yellow "\<(FIXME|TODO|XXX)\>"
